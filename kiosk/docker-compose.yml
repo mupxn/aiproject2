@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./project
+    container_name: frontend-kiosk
+    image: frontend-kiosk
+    ports:
+      - "4998:4998"
+    depends_on:
+      - backend
+    env_file:
+      - ./project/.env
+
+  backend:
+    build: ./backend
+    container_name: backend-kiosk
+    image: backend-kiosk
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./backend/.env
+    # volumes:
+    #   - /dev/video0:/dev/video0
+
+networks:
+  default:
+    name: shared_network
+    driver: bridge
